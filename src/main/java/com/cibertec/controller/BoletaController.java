@@ -1,28 +1,24 @@
 package com.cibertec.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.cibertec.entidades.Boleta;
-import com.cibertec.entidades.Cliente;
-import com.cibertec.entidades.Mensaje;
 import com.cibertec.entidades.Producto;
-import com.cibertec.entidades.BoletaHasProducto;
-import com.cibertec.entidades.BoletaHasProductoPK;
-import com.cibertec.entidades.Seleccion;
-import com.cibertec.entidades.Usuario;
 import com.cibertec.service.BoletaService;
 import com.cibertec.service.ClienteService;
 import com.cibertec.service.ProductoService;
 
-@Controller
+@RestController
+@RequestMapping("/rest/boleta")
 public class BoletaController {
 
 	@Autowired
@@ -34,7 +30,23 @@ public class BoletaController {
 	@Autowired
 	private BoletaService boletaService;
 	
+	@GetMapping("/listaProducto") 
+	public ResponseEntity<?> listaProducto(
+			@RequestParam(name = "page", defaultValue = "0", required = false ) int page,
+			@RequestParam(name = "size", defaultValue = "5", required = false ) int size){
+		Pageable paginacion = PageRequest.of(page, size);
+		List<Producto> lista = productoService.listaproducto("%", paginacion);
+		return ResponseEntity.ok(lista);
+	}
 	
-	
-	
+	@GetMapping("/listaProducto/{filtro}")
+	public ResponseEntity<?> listaProducto(
+			@PathVariable("filtro")String filtro,
+			@RequestParam(name = "page", defaultValue = "0", required = false ) int page,
+			@RequestParam(name = "size", defaultValue = "5", required = false ) int size){
+		Pageable paginacion = PageRequest.of(page, size);
+		List<Producto> lista = productoService.listaproducto(filtro + "%",paginacion);
+		return ResponseEntity.ok(lista);
+	}
+
 }

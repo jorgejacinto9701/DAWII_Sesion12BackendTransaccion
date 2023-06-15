@@ -3,6 +3,7 @@ package com.cibertec.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.cibertec.entidades.Producto;
@@ -15,8 +16,8 @@ public class ProductoServiceImpl implements ProductoService {
 	private ProductoRepository repository;
 
 	@Override
-	public List<Producto> listaproducto(String filtro) {
-		return repository.listaproducto(filtro);
+	public List<Producto> listaproducto(String filtro, Pageable pageable) {
+		return repository.listaproducto(filtro, pageable);
 	}
 
 }
