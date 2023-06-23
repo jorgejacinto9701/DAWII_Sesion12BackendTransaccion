@@ -1,5 +1,7 @@
 package com.cibertec.entidades;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -12,7 +14,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "boleta_has_boleta")
+@Table(name = "boleta_has_producto")
 public class BoletaHasProducto {
 
 	@EmbeddedId
@@ -24,10 +26,12 @@ public class BoletaHasProducto {
 	@Column(length = 10)
 	private int cantidad;
 
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "idboleta", nullable = false, insertable = false, updatable = false)
 	private Boleta boleta;
 
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "idproducto", nullable = false, insertable = false, updatable = false)
 	private Producto producto;
