@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cibertec.entidades.Boleta;
@@ -38,12 +39,14 @@ public class BoletaController {
 	private BoletaService boletaService;
 
 	@PostMapping("/registraBoleta")
-	public ResponseEntity<?> registraBoleta(@RequestBody Boleta objBoleta) {
+	@ResponseBody
+	public ResponseEntity<?> registraBoleta(@RequestBody  Boleta objBoleta) {
+		
 		HashMap<String, Object> salida = new HashMap<String, Object>();
 		Boleta objBoletaSalida = boletaService.insertaBoleta(objBoleta);
 		if (objBoletaSalida != null) {
 			salida.put("mensaje", "Se registró la boleta " + objBoletaSalida.getIdboleta());
-			salida.put("mensaje", objBoletaSalida);
+			salida.put("data", objBoletaSalida);
 		}else {
 			salida.put("mensaje", "No se registró la boleta, consulte al administardor");
 		}
@@ -57,7 +60,8 @@ public class BoletaController {
 	}
 
 	@GetMapping("/listaProducto")
-	public ResponseEntity<?> listaProducto(@RequestParam(name = "page", defaultValue = "0", required = false) int page,
+	public ResponseEntity<?> listaProducto(
+			@RequestParam(name = "page", defaultValue = "0", required = false) int page,
 			@RequestParam(name = "size", defaultValue = "5", required = false) int size) {
 		Pageable paginacion = PageRequest.of(page, size);
 		List<Producto> lista = productoService.listaproducto("%", paginacion);
@@ -74,7 +78,8 @@ public class BoletaController {
 	}
 
 	@GetMapping("/listaCliente")
-	public ResponseEntity<?> listaCliente(@RequestParam(name = "page", defaultValue = "0", required = false) int page,
+	public ResponseEntity<?> listaCliente(
+			@RequestParam(name = "page", defaultValue = "0", required = false) int page,
 			@RequestParam(name = "size", defaultValue = "5", required = false) int size) {
 		Pageable paginacion = PageRequest.of(page, size);
 		List<Cliente> lista = clienteService.listaCliente("%", paginacion);

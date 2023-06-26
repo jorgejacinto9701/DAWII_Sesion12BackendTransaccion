@@ -18,7 +18,7 @@ import lombok.Setter;
 public class BoletaHasProducto {
 
 	@EmbeddedId
-	private BoletaHasProductoPK productoHasBoletaPK;
+	private BoletaHasProductoPK boletaHasProductoPK;
 
 	@Column(precision = 22)
 	private double precio;

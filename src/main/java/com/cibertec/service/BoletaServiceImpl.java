@@ -25,8 +25,8 @@ public class BoletaServiceImpl implements BoletaService{
 	public Boleta insertaBoleta(Boleta obj) {
 		Boleta cabecera = boletaRepository.save(obj);
 		for (BoletaHasProducto d : cabecera.getDetallesBoleta()) {
-			d.getProductoHasBoletaPK().setIdBoleta(cabecera.getIdboleta());
-			detalleRepository.actualizaStock(d.getCantidad(), d.getProductoHasBoletaPK().getIdProducto());
+			d.getBoletaHasProductoPK().setIdBoleta(cabecera.getIdboleta());
+			detalleRepository.actualizaStock(d.getCantidad(), d.getBoletaHasProductoPK().getIdProducto());
 			detalleRepository.save(d);
 		}
 		return cabecera;

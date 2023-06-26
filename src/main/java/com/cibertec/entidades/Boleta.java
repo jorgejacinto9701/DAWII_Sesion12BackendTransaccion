@@ -5,9 +5,6 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -38,17 +35,17 @@ public class Boleta {
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private Date fecha = new Date();
 
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "idcliente", nullable = false)
 	private Cliente cliente;
 
-	@JsonIgnore
+	//@JsonIgnore
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "idusuario", nullable = false)
 	private Usuario usuario;
 
-	@JsonIgnore
+	//@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "boleta")
 	private List<BoletaHasProducto> detallesBoleta;
 
